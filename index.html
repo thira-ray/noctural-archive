@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Nocturne Archive</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #100b10;
+      color: #f2e8ee;
+      font-family: Georgia, serif;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image:
+        radial-gradient(#f7dfe8 1px, transparent 1px),
+        radial-gradient(#b58ba0 1px, transparent 1px);
+      background-size: 80px 80px, 130px 130px;
+      z-index: -1;
+    }
+
+    header {
+      padding: 24px 7%;
+      border-bottom: 1px solid #6d4658;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand {
+      color: #d7a0b3;
+      letter-spacing: 3px;
+      font-size: 12px;
+    }
+
+    a {
+      color: #d7a0b3;
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 580px;
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .moon {
+      width: 85px;
+      height: 85px;
+      border: 1px solid #6d4658;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 45px;
+      color: #d7a0b3;
+      animation: glow 4s infinite alternate;
+    }
+
+    .eyebrow {
+      color: #d7a0b3;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 11px;
+      margin-top: 25px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 8vw, 85px);
+      font-weight: normal;
+      line-height: 1.1;
+      margin: 20px 0;
+    }
+
+    h1 span {
+      display: block;
+      color: #d7a0b3;
+      font-style: italic;
+    }
+
+    .hero p,
+    .section-intro {
+      max-width: 520px;
+      line-height: 1.8;
+      color: #b8a4b1;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 13px 20px;
+      background: transparent;
+      border: 1px solid #6d4658;
+      color: #f2e8ee;
+      font-family: inherit;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #64243a;
+      border-color: #d7a0b3;
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: #64243a;
+      border-color: #64243a;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 70px 24px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: normal;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 35px 0;
+      text-align: left;
+    }
+
+    .card {
+      padding: 28px 22px;
+      background: #211620;
+      border: 1px solid #513447;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      border-color: #d7a0b3;
+      transform: translateY(-5px);
+    }
+
+    .symbol {
+      font-size: 32px;
+      color: #d7a0b3;
+    }
+
+    .card h3 {
+      font-weight: normal;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #b8a4b1;
+      line-height: 1.7;
+      min-height: 65px;
+    }
+
+    .secret-panel {
+      max-width: 680px;
+      margin: 45px auto 0;
+      padding: 30px 20px;
+      border: 1px solid #6d4658;
+      background: #1b1019;
+    }
+
+    #secretMessage {
+      color: #d7a0b3;
+      font-size: 18px;
+      line-height: 1.8;
+      min-height: 55px;
+    }
+
+    #fortuneText {
+      color: #b8a4b1;
+      margin-top: 20px;
+      line-height: 1.7;
+    }
+
+    .letter-form {
+      max-width: 500px;
+      margin: 25px auto 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      min-width: 0;
+      flex: 1;
+      padding: 13px;
+      background: #100b10;
+      color: white;
+      border: 1px solid #6d4658;
+      font-family: inherit;
+    }
+
+    footer {
+      padding: 30px 15px;
+      text-align: center;
+      border-top: 1px solid #513447;
+      color: #b8a4b1;
+      font-size: 13px;
+    }
+
+    .heart {
+      color: #d7a0b3;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%);
+      background: #64243a;
+      color: white;
+      padding: 15px 20px;
+      width: max-content;
+      max-width: 90%;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px #8b3e5b22;
+      }
+      to {
+        box-shadow: 0 0 45px #8b3e5b77;
+      }
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 20px;
+      }
+
+      .brand {
+        letter-spacing: 1px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .letter-form {
+        flex-direction: column;
+      }
+
+      .hero {
+        min-height: 520px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+
+  <header>
+    <div class="brand">✦ THE NOCTURNE ARCHIVE</div>
+    <a href="#archive">Enter the archive ↓</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="moon">☾</div>
+      <div class="eyebrow">A collection of beautiful mysteries</div>
+
+      <h1>
+        THE NOCTURNE
+        <span>ARCHIVE</span>
+      </h1>
+
+      <p>
+        Some secrets are written in ink. Others are hidden
+        between the shadows, waiting for the right person to find them.
+      </p>
+
+      <div class="button-row">
+        <button class="primary" onclick="goToArchive()">
+          Open the archive
+        </button>
+
+        <button onclick="whisper()">
+          Hear a whisper ✧
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="archive">
+      <div class="eyebrow">Filed under: the unknown</div>
+      <h2>Choose a Sealed Record</h2>
+
+      <p class="section-intro">
+        Every record holds a small piece of the night.
+        Click one to uncover its message.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <div class="symbol">☽</div>
+          <h3>The Moonlit Room</h3>
+          <p>A place where forgotten wishes glow softly in the dark.</p>
+          <button onclick="openRecord('moon')">Unseal record</button>
+        </article>
+
+        <article class="card">
+          <div class="symbol">❦</div>
+          <h3>The Withered Rose</h3>
+          <p>A reminder that even fading things can remain beautiful.</p>
+          <button onclick="openRecord('rose')">Unseal record</button>
+        </article>
+
+        <article class="card">
+          <div class="symbol">✧</div>
+          <h3>The Last Star</h3>
+          <p>A tiny light left behind for those who wander too far.</p>
+          <button onclick="openRecord('star')">Unseal record</button>
+        </article>
+      </div>
+
+      <div class="secret-panel" aria-live="polite">
+        <div class="eyebrow">Recovered fragment</div>
+
+        <p id="secretMessage">
+          The archive is waiting. Choose a record above.
+        </p>
+
+        <button class="primary" onclick="drawFortune()">
+          Draw a midnight message
+        </button>
+
+        <div id="fortuneText">
+          Your message will appear here.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="letter">
+      <div class="eyebrow">A letter to the unknown</div>
+      <h2>Leave a Little Secret</h2>
+
+      <p class="section-intro">
+        Write a word or a wish. It stays in this page for this
+        visit only; it is not sent anywhere.
+      </p>
+
+      <form class="letter-form" id="letterForm">
+        <input
+          id="secretInput"
+          maxlength="120"
+          placeholder="A wish, a word, a little secret…"
+          aria-label="Your secret"
+          required
+        >
+        <button class="primary" type="submit">Seal the letter</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    Made beneath a velvet sky
+    <span class="heart">♥</span>
+    The night keeps your secrets.
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Messages hidden inside each record
+    const records = {
+      moon: "The moon remembers every wish you were too afraid to say aloud.",
+      rose: "Even a withered rose carries the memory of its bloom.",
+      star: "You do not need to shine for everyone. One small light can be enough."
+    };
+
+    // Random whispers
+    const whispers = [
+      "Psst… the things you love make you who you are.",
+      "Not every shadow is something to fear.",
+      "There is magic in beginning again, quietly.",
+      "Some doors open only when you stop knocking."
+    ];
+
+    // Random fortunes
+    const fortunes = [
+      "A beautiful surprise may arrive in an ordinary moment.",
+      "Trust the tiny spark that keeps returning to your thoughts.",
+      "You are allowed to become someone new.",
+      "Rest is not the opposite of progress.",
+      "Something you thought was an ending may be a doorway.",
+      "Keep a little room in your heart for wonder."
+    ];
+
+    // Scroll to the records
+    function goToArchive() {
+      document.getElementById("archive").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    // Pick a random item from a list
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    // Show a temporary notification
+    let toastTimer;
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(function () {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    // Open a secret record
+    function openRecord(name) {
+      document.getElementById("secretMessage").textContent =
+        records[name];
+
+      showToast("Record unsealed ✧");
+    }
+
+    // Reveal a random whisper
+    function whisper() {
+      showToast(randomItem(whispers));
+    }
+
+    // Draw a random midnight fortune
+    function drawFortune() {
+      document.getElementById("fortuneText").textContent =
+        "“" + randomItem(fortunes) + "”";
+    }
+
+    // Seal a secret letter
+    document.getElementById("letterForm").addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+
+        const input = document.getElementById("secretInput");
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        document.getElementById("secretMessage").textContent =
+          "Your sealed letter reads: “" + message + "”";
+
+        input.value = "";
+
+        showToast("Your letter has been sealed for this visit.");
+      }
+    );
+  </script>
+</body>
+</html>
